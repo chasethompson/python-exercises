@@ -136,11 +136,13 @@ for i in range(1,101):
 
 while True:
     number = int(input("Enter a number: "))
-    print("Here is your table!")
+    print("Here is your table!\n")
+    print("|number|squared|cubed|")
+    print("|------|-------|-----|")
     for i in range(1, (number + 1)):
         square = i ** 2
         cube = i ** 3
-        print(i, square, cube)
+        print("|" + str(i) + "|",square, cube)
     continue_string = input("Would you like to play again? Enter Y or N: ")
     if continue_string.lower() == "y":
         print("Let's do this again.")
@@ -148,21 +150,60 @@ while True:
     else:
         print("Have a good day.")
         break
-
+    
 # Convert given number grades into letter grades.
 
-user_grade = input("Enter numerical grade from 0 to 100: ")
-for grade in user_grade:
+while True:
+    grade = float(input("What was your grade?\n"))
     if grade >= 88:
-        print("A")
+        print("Noice, an A")
     elif grade >= 80:
-        print("B")
+        print("Solid showing with a B")
     elif grade >= 67:
-        print("C")
+        print("C get degrees")
     elif grade >= 60:
-        print("D")
+        print("Dun dun dunnnn, you got a D")
     else:
-        print("F")
+        print("See you after class, you got an F")
+    continue_string = input("Would you like to put in another grade? Enter Y or N: ")
+    if continue_string.lower() == "y":
+        print("Let's see hoe you did.")
+        continue
+    else:
+        print("Have a good day.")
+        break
+
+#Create a list of dictionaries where each dictionary represents a book that you have read.
+
+books_i_have_read = [
+    {"title": "Ender's Game", "author": "Orson Scott Card", "genre": "scifi"},
+    {"title": "Never Split The Difference", "author": "Christopher Voss", "genre": "self help"},
+    {"title": "Harry Potter and The Prisoner of Azkaban", "author": "J.K. Rowling", "genre": "fantasy"},
+    {"title": "The Obstacle Is The Way", "author": "Ryan Holiday", "genre": "philosophy"}]
+
+genre_list = []
+for i in books_i_have_read:
+    genre_question = input("What genre would you like to see a book for? ".lower())
+    if genre_question in genre_list:
+        break
+    else:
+        print("Sorry, we don't have a book in that genre. Try again ")
+for i in books_i_have_read:
+    if genre_question == i["genre"]:
+        print(i["title"]) 
 
 
+books_i_have_read = [{"title": "Ender's Game", "author": "Orson Scott Card", "genre": "scifi"}, {"title": "Never Split The Difference", "author": "Christopher Voss", "genre": "self help"},{"title":"Harry Potter and The Prisoner of Azkaban", "author":"J.K. Rowling", "genre":"fantasy"},{"title":"The Obstacle Is The Way", "author": "Ryan Holiday","genre": "philosophy"}]
+genre_list = []
+for i in books:
+    genre_list.append(i["genre"])
+while 'money' != "happiness":
+    book_genre = input("What genre would you like to browse\n").lower()
+    if book_genre in genre_list:
+        break
+    else:
+        print("sorry we don't carry anything in that genre, maybe try something else")
+for i in books:
+    if book_genre == i["genre"]:
+        print(i["title"])
 
