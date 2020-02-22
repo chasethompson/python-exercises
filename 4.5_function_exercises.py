@@ -94,13 +94,24 @@ def remove_vowels(word):
             word = output
     return word
 
+# 10. Define a function named normalize_name. It should accept a string and return a valid python identifier, that is:
+# anything that is not a valid python identifier should be removed
+# leading and trailing whitespace should be removed
+# everything should be lowercase
+# spaces should be replaced with underscores
+# for example:
+#   Name will become name
+#   First Name will become first_name
+#   % Completed will become completed
 
-# 10.
-
-for letter in word:
-    output = ''
-    if letter not in unaccpetable
-    output += letter
+def normalize_name(name):
+    for letter in name:
+        if not letter.isidentifier() and letter != " ":
+            name = name.replace(letter, " ")
+    name = name.lower()
+    name = name.strip()
+    name = name.replace(" ","_")
+    return name
 
 # Notes
 # to make your own function, we need to define it first
