@@ -113,6 +113,32 @@ def normalize_name(name):
     name = name.replace(" ","_")
     return name
 
+# 11. Write a function named cumsum that accepts a list of numbers and returns a list that is the cumulative sum of the numbers in the list.
+# cumsum([1, 1, 1]) returns [1, 2, 3]
+# cumsum([1, 2, 3, 4]) returns [1, 3, 6, 10]
+
+def cumsum(number_string):
+    total = 0
+    outlist = []
+    for num in number_string:
+       total += int(num)
+       outlist.append(total)
+    return outlist
+
+
+# ** Bonus ** Create a function named twelveto24. It should accept a string in the format 10:45am or 4:30pm and return a string that is the representation of the time in a 24-hour format. Bonus write a function that does the opposite.
+
+def twelveto24(time):
+    time = time.lower()
+    if time[-2:] == 'am' and time[:2] == "12":
+        return "00" + time[2:-2]
+    elif time[-2:] == "am":
+        return time[:-2]
+    elif time[-2] == "pm" and time[:2] == "12":
+        return time[:-2]
+    else:
+        return str(int(time[:2]) + 12) + time [2:5]
+
 # Notes
 # to make your own function, we need to define it first
 
