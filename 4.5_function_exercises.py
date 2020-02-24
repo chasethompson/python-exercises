@@ -260,11 +260,11 @@ def remove_special_characters(string):
 
 def normalize_name(string):
     without_special_chars = remove_special_characters(string)
-    return without_special_chars.lower().strip().replace(' ', '_')
+    return without_special_chars.lower().strip().replace(' ', '_') """
 
 assert normalize_name('Name') == name
 assert normalize_name('First Name') == first_name
-assert normalize_name('% Completed') == completed """
+assert normalize_name('% Completed') == completed
 
 # 11. Write a function named cumsum that accepts a list of numbers and returns a list that is the cumulative sum of the numbers in the list.
 # cumsum([1, 1, 1]) returns [1, 2, 3]
@@ -293,29 +293,32 @@ assert cumsum([1, 2, 3, 4]) == [1, 3, 6, 10]
 # ** Bonus ** Create a function named twelveto24. It should accept a string in the format 10:45am or 4:30pm and return a string that is the representation of the time in a 24-hour format. Bonus write a function that does the opposite.
 
 def twelveto24(time):
-    time = time.lower()
-    if time[-2:] == 'am' and time[:2] == "12":
-        return "00" + time[2:-2]
-    elif time[-2:] == "am":
-        return time[:-2]
-    elif time[-2] == "pm" and time[:2] == "12":
-        return time[:-2]
+    """Converts 12 hours time format to 24 hours
+    """
+    time = time.replace(' ', '')
+    time, half_day = time[:-2], time[-2:].lower()
+    if time[:2] == "12" and half_day == "am":
+        return "00" + time[2:]
+    elif half_day == "am":
+        return time
+    elif time[:2] == "12" and half_day == 'pm':
+        return time
+    elif half_day == 'pm':
+        split = time.find(':')
+        if split == -1:
+            split = None
+        return str(int(time[:split]) + 12) + time[split:]
     else:
-        return str(int(time[:2]) + 12) + time [2:5]
+        print("You didn't finish with AM or PM.")
+
+assert twelveto24('12:45AM') == '00:45'
+assert twelveto24('12:45PM') == '12:45'
+assert twelveto24('10:45AM') == '10:45'
+assert twelveto24('10:45PM') == '22:45'
+
+
 
 # ** Bonus ** Create a function named col_index. It should accept a spreadsheet column name, and return the index number of the column.
-
-def col_index(col_name):
-    if str(col_index).isdigit():
-        return False
-    col_name.lower()
-    result = 0;  
-    for letter in range(len(col_name)):  
-        result *= 26;  
-        result += ord(col_name[letter]) - ord('A') + 1;  
-    return result 
- 
-print(col_index("A"))
 
 def col_index(col_str):
     """ Convert base26 column string to number. """
@@ -326,6 +329,11 @@ def col_index(col_str):
         expn += 1
 
     return col_num
+
+assert col_index('A') == 1
+assert col_index('Z') == 26
+assert col_index('XFD') == 16384
+
 
 # Notes
 # to make your own function, we need to define it first
