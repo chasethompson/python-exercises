@@ -1,1 +1,1 @@
-['milk', 'bread', 'eggs', 'bananas']
+['bread', 'eggs', 'bananas']

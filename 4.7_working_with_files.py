@@ -9,16 +9,25 @@ with open(import_exercises) as f:
 
 # a. Print out every line in the file
 
-with open(import_exercises) as f:
-    print(f.read())
+with open(import_exercises, "r") as f:
+    contents = f.readlines()
+    for line in contents:
+        print (line)
 
 # b. Print out every line in the file, but add a line numbers
 
-with open("4.6_import_exercises.py", "r") as a, open("4.6_import_exercises_b.py", "w") as b:
+with open(import_exercises, "r") as a, open(import_exercises, "w") as b:
     index = 1
     for line in a:
         b.write("{:4d}: {}\n".format(index, line.rstrip()))
         index += 1
+
+# Better way to handle 1b
+
+with open(import_exercises, "r") as f:
+    contents = f.readlines()
+    for i, line in enumerate(contents, start = 1):
+        print(i + " : " + line)
 
 
 # 2. Write some python code to create a grocery list.
@@ -33,12 +42,29 @@ def make_grocery_list(grocery_list):
     with open("my_grocery_list.txt", "a") as f:
         f.write(str(grocery_list))
 
+# Class Version
+
+def make_grocery_list(grocery_list):
+    filename = "my_grocery_list.txt"
+    with open(filename, "a") as f:
+        for item in grocery_list:
+            f.write(item + "\n")
 
 # c. Create a function named show_grocery_list. When run, it should read the items from the text file and show each item on the grocery list.
 
 def show_grocery_list(grocery_list):
     with open("my_grocery_list.txt") as f:
         print(f.read())
+
+#Class Version
+
+def show_grocery_list():
+    with open("my_grocery_list.txt") as f:
+        contents = f.readlines()
+        for item in contents:
+            print(item)
+
+show_grocery_list()
 
 # d. Create a function named buy_item. It should accept the name of an item on the grocery list, and remove that item from the list.
 
@@ -49,6 +75,15 @@ def buy_item(item):
     with open("my_grocery_list.txt", "w") as f:
         f.write(str(new_grocery_list))
     return grocery_list
+
+# Class Version
+
+def buy_item(item, grocery_list):
+    grocery_list.remove(item)
+    make_grocery_list(grocery_list)
+buy_item("spinach", grocery_list)
+
+
 
 """
 # Notes
