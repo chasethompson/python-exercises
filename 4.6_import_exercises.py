@@ -64,30 +64,73 @@ print(combo_count)
 
 # Save this file as profiles.json inside of your exercises directory. Use the load function from the json module to open this file, it will produce a list of dictionaries. Using this data, write some code that calculates and outputs the following information:
 
-
-
-# Number of inactive users
-# Grand total of balances for all users
-# Average balance per user
-# User with the lowest balance
-# User with the highest balance
-# Most common favorite fruit
-# Least most common favorite fruit
-# Total number of unread messages for all users
-
 import json
 
 json.load(open("profiles.json"))
 profile = json.load(open("profiles.json"))
 
-# Total number of users
+# 1. Total number of users
 users = len(profile)
 
-# Number of active users
+# 2. Number of active users
 active_user = [user for user in profile if user['isActive'] == True]
+len(active_user)
 
+# 3. Number of inactive users
+inactive_user = [user for user in profile if user['isActive'] != True]
+len(inactive_user)
 
+# 4. Grand total of balances for all users
 
+total_balance = sum([float(profile["balance"].strip("$").replace(",", "")) for profile in profile])
+total_balance
 
-print(len(profile))
+# 5. Average balance per user
+
+avg_balance = round((total_balance / users), 2)
+avg_balance
+
+# 6. User with the lowest balance
+
+# Lines below were my first attempt
+# lowest_bal = min([float(profile["balance"].strip("$").replace(",", "")) for profile in profile]) 
+# user_with_low_bal = [user['name'] for user in profile if user['balance'] == lowest_bal]
+
+lowest_bal = min([profile['balance'] for profile in profile])
+lowest_bal
+user_with_low_bal = [profile['name'] for profile in profile if profile['balance'] == lowest_bal]
+user_with_low_bal
+
+# 7. User with the highest balance
+
+highest_bal = max([profile['balance'] for profile in profile])
+highest_bal
+user_with_high_bal = [profile['name'] for profile in profile if profile['balance'] == highest_bal]
+user_with_high_bal
  
+# 8. Most common favorite fruit
+
+max_favorite_fruits = max([profile['favoriteFruit'] for profile in profile])
+max_favorite_fruits
+
+# 9. Least most common favorite fruit
+
+min_favorite_fruits = min([profile['favoriteFruit'] for profile in profile])
+min_favorite_fruits
+
+# Or you could import Counter
+from collections import Counter
+
+Counter([profile['favoriteFruit'] for profile in profile])
+
+# With Counter() we see apple has the lowest number
+
+# 10. Total number of unread messages for all users
+
+user_greeting = [profile['greeting'] for profile in profile]
+user_greeting
+user_unread_message = list(map(lambda sub:int(''.join([ele for ele in sub if ele.isnumeric()])), user_greeting))
+total_unread = sum(user_unread_message)
+total_unread
+
+
