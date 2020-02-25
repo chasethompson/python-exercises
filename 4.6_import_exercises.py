@@ -71,24 +71,31 @@ profile = json.load(open("profiles.json"))
 
 # 1. Total number of users
 users = len(profile)
+print(f"We have a total user base of {users}.")
+
 
 # 2. Number of active users
 active_user = [user for user in profile if user['isActive'] == True]
 len(active_user)
+print(f"We have {len(active_user)} active users out of {users} total users in the system.")
 
 # 3. Number of inactive users
 inactive_user = [user for user in profile if user['isActive'] != True]
 len(inactive_user)
+print(f"We have {len(inactive_user)} inactive users out of {users} total users in the system.")
+
 
 # 4. Grand total of balances for all users
 
 total_balance = sum([float(profile["balance"].strip("$").replace(",", "")) for profile in profile])
 total_balance
+print(f"The total balance for all users is ${total_balance}.")
 
 # 5. Average balance per user
 
 avg_balance = round((total_balance / users), 2)
 avg_balance
+print(f"The average balance across all users is ${avg_balance}.")
 
 # 6. User with the lowest balance
 
@@ -98,8 +105,9 @@ avg_balance
 
 lowest_bal = min([profile['balance'] for profile in profile])
 lowest_bal
-user_with_low_bal = [profile['name'] for profile in profile if profile['balance'] == lowest_bal]
+user_with_low_bal = ([profile['name'] for profile in profile if profile['balance'] == lowest_bal])
 user_with_low_bal
+print(f"Our user with the lowest balance is {user_with_low_bal}.")
 
 # 7. User with the highest balance
 
@@ -107,21 +115,26 @@ highest_bal = max([profile['balance'] for profile in profile])
 highest_bal
 user_with_high_bal = [profile['name'] for profile in profile if profile['balance'] == highest_bal]
 user_with_high_bal
+print(f"Our user with the highest balance is {user_with_high_bal}.")
  
 # 8. Most common favorite fruit
 
 max_favorite_fruits = max([profile['favoriteFruit'] for profile in profile])
 max_favorite_fruits
+print(f"The most popular fruit among our users is {max_favorite_fruits}.")
 
 # 9. Least most common favorite fruit
 
 min_favorite_fruits = min([profile['favoriteFruit'] for profile in profile])
 min_favorite_fruits
+print(f"By far {min_favorite_fruits}s are the least popular fruit among our users.")
 
 # Or you could import Counter
 from collections import Counter
 
-Counter([profile['favoriteFruit'] for profile in profile])
+fruits = Counter([profile['favoriteFruit'] for profile in profile])
+most_common_fav = fruits.most_common(1)[0][0]
+least_common_fav = fruits.most_common()[-1][0]
 
 # With Counter() we see apple has the lowest number
 
@@ -129,8 +142,16 @@ Counter([profile['favoriteFruit'] for profile in profile])
 
 user_greeting = [profile['greeting'] for profile in profile]
 user_greeting
-user_unread_message = list(map(lambda sub:int(''.join([ele for ele in sub if ele.isnumeric()])), user_greeting))
+user_unread_message = list(map(lambda sub:int(''.join([num for num in sub if num.isnumeric()])), user_greeting))
 total_unread = sum(user_unread_message)
 total_unread
+print(f"Our users have a total of {total_unread} unread messages.")
 
+# Using RegEx to solve for the unread messages
 
+import re
+profile_greeting = [re.sub('[^0-9]+', '', profile["greeting"]) for profile in profile]
+profile_greeting
+def total_unread(l):
+    return sum([int(i) for i in l if type(i) == int or i.isdigit()])
+total_unread(profile_greeting)
