@@ -94,7 +94,7 @@ type is object, which means strings
 
 # b. Use series operations to convert the series to a numeric data type.
 
-amount.replace('[\$,]', '', regex=True).astype(float)
+amount_as_float = amount.replace(r'[\$,]', '', regex=True).astype(float)
 
 """
 
@@ -102,7 +102,7 @@ or
 
 """
 
-amount.str.replace('[\$,]', '').astype(float)
+amount_as_float = amount.str.replace(r'[\$,]', '').astype(float)
 
 # c. What is the maximum value? The minimum?
 
@@ -198,6 +198,8 @@ gibberish.apply(count_vowels).sum()
 # c. How many consonants are in the list?
 
 gibberish.str.len().sum() - gibberish.apply(count_vowels).sum()
+
+gibberish[~gibberish.apply(lambda n: n in 'aeiou')].count()
 
 # d. Create a series that has all of the same letters, but uppercased
 
