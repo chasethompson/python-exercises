@@ -25,16 +25,23 @@ fruits.value_counts()
 # e. Determine the most frequently occurring fruit name from the series.
 
 fruits.value_counts().sort_values().tail(1)
+"""fruits.value_counts().index[0] # accesses the index at index 0"""
 
 # f. Determine the least frequently occurring fruit name from the series.
 
 fruits.value_counts().sort_values().head(1)
+"""fruits.value_counts().index[-1]"""
 
 # g. Write the code to get the longest string from the fruits series.
 
+index_of_longest_string = fruits.apply(len).argmax()
+
+fruits[index_of_longest_string]
 # this returns maximum string length
+
 fruits.str.len().max()
 # this returns the fruit with the maximum string length
+
 max(fruits, key = len)
 
 # h . Find the fruit(s) with 5 or more letters in the name.
@@ -45,9 +52,11 @@ fruits[five_or_more_letters]
 # i. Capitalize all the fruit strings in the series.
 
 fruits.str.upper()
+"""fruits.str.title()"""
 
 # j. Count the letter "a" in all the fruits (use string vectorization)
 
+fruits.str.count("a")
 fruits.str.count('a').sum()
 
 # k. Output the number of vowels in each and every fruit.
@@ -60,6 +69,16 @@ def count_vowels(n):
     return num_vowels
 
 fruits.apply(count_vowels)
+
+"""
+fruits = fruits.str.lower()
+
+(fruits.str.count("a") 
+     + fruits.str.count("e") 
+     + fruits.str.count("i") 
+     + fruits.str.count("o") 
+     + fruits.str.count("u"))
+"""
 
 # l. Use the .apply method and a lambda function to find the fruit(s) containing two or more "o" letters in the name.
 
@@ -76,6 +95,14 @@ fruits[fruits.str.contains('apple')]
 # o. Which fruit has the highest amount of vowels?
 
 fruits[fruits.apply(count_vowels).max()]
+
+"""
+fruits[(fruits.str.count("a") 
+     + fruits.str.count("e") 
+     + fruits.str.count("i") 
+     + fruits.str.count("o") 
+     + fruits.str.count("u")).argmax()]
+"""
 
 # 2 Use pandas to create a Series from the following data:
 
@@ -121,12 +148,25 @@ amount_as_float.value_counts(bins=4).sort_index()
 dtype: int64
 """
 
+"""
+bins = pd.cut(prices, 4)
+bins.value_counts()
+"""
+
 # e. Plot a histogram of the data. Be sure to include a title and axis labels.
 
 plt.figure(figsize=(16, 6))
 amount_as_float.plot.hist()
 plt.title("Invoice Totals")
 plt.xlabel("Invoice Total")
+
+"""
+plt.title("price distributions in 4 equal bins")
+plt.xlabel("$")
+plt.ylabel("# occurences")
+plt.hist(prices, bins=4)
+plt.show()
+"""
 
 # 3. Use pandas to create a Series from the following exam scores:
 
@@ -137,6 +177,7 @@ exam_scores = pd.Series([60, 86, 75, 62, 93, 71, 60, 83, 95, 78, 65, 72, 69, 81,
 # a. What is the minimum exam score? The max, mean, median?
 
 exam_scores.agg(['min', 'max', 'mean', 'median'])
+exam_scores.describe()
 
 # b. Plot a histogram of the scores.
 
@@ -183,13 +224,25 @@ gibberish = list('hnvidduckkqxwymbimkccexbkmqygkxoyndmcxnwqarhyffsjpsrabtjzsypmz
 
 gibberish = pd.Series(gibberish)
 
+"""
+letters = pd.Series(list(gibberish))
+"""
+
 # a. What is the most frequently occuring letter? Least frequently occuring?
  
 # Most frequent
+
 gibberish.value_counts().head(1)
+"""
+letters.value_counts().index[0]
+"""
 
 # Least frequent
+
 gibberish.value_counts().tail(1)
+"""
+letters.value_counts().index[-1]
+"""
 
 # 6. How many vowels are in the list?
 
@@ -208,6 +261,11 @@ gibberish.str.upper()
 # e. Create a bar plot of the frequencies of the 6 most frequently occuring letters.
 
 six_most_frequent = gibberish.value_counts().head(6)
+
+"""
+six_most_frequent = gibberish.value_counts()[:6]
+
+"""
 
 plt.figure(figsize=(16, 9))
 six_most_frequent.plot.bar()
