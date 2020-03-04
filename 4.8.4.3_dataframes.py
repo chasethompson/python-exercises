@@ -35,6 +35,8 @@ df['passing_english'] = df.reading > 70
 
 df.sort_values(by='passing_english', ascending=False)
 
+# Duplicates are sorted failing, then passing, with an overall sort by index after those are applied.
+
 # Sort the english grades first by passing_english and then by student name. All the students that are failing english should be first, and within the students that are failing english they should be ordered alphabetically. The same should be true for the students passing english. (Hint: you can pass a list to the .sort_values method)
 
 df.sort_values(by=['passing_english', 'name'])
@@ -46,8 +48,11 @@ df.sort_values(by=['passing_english', 'english'])
 # Calculate each students overall grade and add it as a column on the dataframe. The overall grade is the average of the math, english, and reading grades.
 
 overall_grade = (df.math + df.english + df.reading) / 3
-df['overall_grade'] = (df.math + df.english + df.reading) / 3
+df['overall_grade'] = ((df.math + df.english + df.reading) / 3).astype('int')
 
+# assign Series back to DataFrame as overall_grade
+
+df['overall_average'] = (df.sum(axis=1) / 3).astype('int')
 # Load the mpg dataset. Read the documentation for the dataset and use it for the following questions:
 
 mpg = data('mpg')
@@ -117,6 +122,23 @@ mpg.rename(columns={'cty': "city"})
 # Rename the hwy column to highway.
 
 mpg.rename(columns={'hwy': "highway"})
+
+# Rename both inplace, at the same time
+
+mpg.rename(columns={'cty': 'city', 'hwy': 'highway'}, inplace=True)
+
+# Another way to rename columns...
+# This is another way you can rename columns if you want to change many at once.
+# I use df.columns to print out a list of the current columns in the DataFrame.
+# Then, I make any changes I want to the names in the list and reassign them to df.columns.
+
+mpg = data('mpg')
+mpg.columns
+Index(['manufacturer', 'model', 'displ', 'year', 'cyl', 'trans', 'drv', 'cty',
+       'hwy', 'fl', 'class'],
+      dtype='object')
+mpg.columns = ['manufacturer', 'model', 'displ', 'year', 'cyl', 'trans', 'drv', 'city',
+       'highway', 'fl', 'class']
 
 # Do any cars have better city mileage than highway mileage?
 
