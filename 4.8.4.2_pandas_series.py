@@ -35,9 +35,7 @@ fruits.value_counts().sort_values().head(1)
 # g. Write the code to get the longest string from the fruits series.
 
 index_of_longest_string = fruits.apply(len).argmax()
-
-fruits[index_of_longest_string]
-# this returns maximum string length
+fruits[index_of_longest_string]# this returns maximum string length
 
 fruits.str.len().max()
 # this returns the fruit with the maximum string length
